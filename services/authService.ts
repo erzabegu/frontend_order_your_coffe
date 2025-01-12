@@ -1,20 +1,19 @@
 import axiosInstance from "@/config/axiosInstance";
 import axios from "axios";
+import userLoginSchema, {userLoginHttpResponse} from "@/schemas /UserLoginSchema";
 
 export class AuthService {
-    public static login = (email: string, password: string) => {
-        try {
-            return axios.post(`${process.env.EXPO_PUBLIC_BASE_URL}/api/auth/login`, {
-                email: email.toLowerCase(),
-                password: password,
-            })
-        } catch (err) {
-            throw err;
-        }
+    public static async login(email: string, password: string) {
+        const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_URL}/api/auth/login`, {
+            email: email.toLowerCase(),
+            password,
+        })
+        return userLoginHttpResponse.parse(response)?.data
     }
-    public static register = (email: string, password: string, name: string, phone: string) => {
+
+    public static async register(email: string, password: string, name: string, phone: string) {
         try {
-            return axiosInstance.post(`${process.env.EXPO_PUBLIC_BASE_URL}/api/auth/signup`, {
+            return await axios.post(`${process.env.EXPO_PUBLIC_BASE_URL}/api/auth/signup`, {
                 email: email.toLowerCase(),
                 password,
                 name,
@@ -24,18 +23,20 @@ export class AuthService {
             throw err;
         }
     }
-    public static sendCode = (email: string) => {
+
+    public static async sendCode(email: string) {
         try {
-            return axiosInstance.post(`${process.env.EXPO_PUBLIC_BASE_URL}/api/auth/request_password_reset`, {
+            return await axios.post(`${process.env.EXPO_PUBLIC_BASE_URL}/api/auth/request_password_reset`, {
                 email: email?.toLowerCase(),
             })
         } catch (err) {
             throw err;
         }
     }
-    public static verifyCode = (email: string, code: string) => {
+
+    public static async verifyCode(email: string, code: string) {
         try {
-            return axiosInstance.post(`${process.env.EXPO_PUBLIC_BASE_URL}/api/auth/verify_code`, {
+            return await axios.post(`${process.env.EXPO_PUBLIC_BASE_URL}/api/auth/verify_code`, {
                 email: email?.toLowerCase(),
                 code: code
             })
@@ -43,9 +44,10 @@ export class AuthService {
             throw err;
         }
     }
-    public static resetPassword = (email: string, newPassword: string) => {
+
+    public static async resetPassword(email: string, newPassword: string) {
         try {
-            return axiosInstance.post(`${process.env.EXPO_PUBLIC_BASE_URL}/api/auth/reset_password`, {
+            return await axios.post(`${process.env.EXPO_PUBLIC_BASE_URL}/api/auth/reset_password`, {
                 email: email?.toLowerCase(),
                 newPassword: newPassword
             })

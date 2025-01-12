@@ -15,7 +15,9 @@ const WelcomeScreenTemplate = () => {
     const router = useRouter();
 
     const handleNextScreen = () => {
-        router.push('/login');
+        router.push("/login")
+        // router.push('/coffeeType/coffeeShop');
+        // router.push('/singleShop/1/singleCoffe/1/myorder')
     };
 
     return (

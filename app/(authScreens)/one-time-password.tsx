@@ -10,7 +10,6 @@ const OneTimePassword = () => {
 
     const onVerifyOneTimePassword = (code: string) => {
         AuthService.verifyCode(userEmail, code).then((res) => {
-            console.log(res, "Res")
             router.push("/new-password");
         }).catch((err) => {
             Toast.show(err?.message, {backgroundColor: 'red'})

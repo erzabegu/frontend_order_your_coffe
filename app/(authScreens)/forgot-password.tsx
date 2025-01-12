@@ -11,7 +11,6 @@ const ForgotPassword = () => {
         AuthService.sendCode(data?.email).then(() => {
             router.push('/one-time-password')
         }).catch((err) => {
-            console.log(err, "Err")
             if (err instanceof AxiosError) {
                 Toast.show(err?.message, {backgroundColor: 'red'})
             } else {
